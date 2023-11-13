@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+// collection class to hold Member objects
+
 public class MemberList {
 
 	private ArrayList<Member> memberList;
@@ -10,8 +12,13 @@ public class MemberList {
 		this.totalMembers = 0;
 	}
 	
+	public ArrayList<Member> getMemberList() {
+		return this.memberList;
+	}
+	
 	public void addMember(Member member) {
 		this.memberList.add(member);
+		this.totalMembers++;
 	}
 	
 	public Member get(int index) {
