@@ -16,6 +16,22 @@ public class Transaction {
         dateOfSale = java.time.ZonedDateTime.now();
     }
 
+    public int getMemberID() {
+        return memberID;
+    }
+
+    public ZonedDateTime getDateOfSale() {
+        return dateOfSale;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public int getTotalProducts() {
+        return totalProducts;
+    }
+
     public void print() {
         System.out.println("Transaction                        MemberID: " + memberID);
         System.out.println(".......................................................");

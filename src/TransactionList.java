@@ -1,3 +1,4 @@
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class TransactionList {
@@ -15,27 +16,27 @@ public class TransactionList {
 	
 	public ArrayList<Transaction> getTransactionsByMember(int memberID) {
 		
-		ArrayList memberTransactions = new ArrayList<Transaction>();
+		ArrayList<Transaction> memberTransactions = new ArrayList<Transaction>();
 		
 		for (Transaction tx : transactions) {
 			if (tx.getMemberID() == memberID) { // TODO
 				memberTransactions.add(tx);
 			}
-		return memberTransactions;
 		}
+		return memberTransactions;
 	}
 	
 	
-	public ArrayList<Transaction> getTransactionsByDate(Date startDate, Date endDate) {
+	public ArrayList<Transaction> getTransactionsByDate(ZonedDateTime startDate, ZonedDateTime endDate) {
 		
-		ArrayList dateTransactions = new ArrayList<Transaction>();
+		ArrayList<Transaction> dateTransactions = new ArrayList<Transaction>();
 		
 		for (Transaction tx : transactions) {
-			if (tx.getDate() >= startDate && tx.getDate() <= endDate) { // TODO
+			if (tx.getDateOfSale().isAfter(startDate) && tx.getDateOfSale().isBefore(endDate)) { // TODO
 				dateTransactions.add(tx);
 			}
-			return dateTransactions;
 		}
+		return dateTransactions;
 	}
 	
 	

@@ -11,6 +11,10 @@ public class Cart {
         totalProducts = 0;
     }
 
+    public int getTotalProducts() {
+        return totalProducts;
+    }
+
     public boolean addLineItemToCart(LineItem item) {
         if (inCart.add(item)) {
             totalProducts++;
