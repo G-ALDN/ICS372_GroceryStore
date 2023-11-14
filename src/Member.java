@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class Member {
 
@@ -6,7 +6,7 @@ public class Member {
 	private int memberID;
 	private String address;
 	private String phoneNumber;
-	private Date enrollmentDate;
+	private ZonedDateTime enrollmentDate;
 	
 	
 	public Member(String name, int memberID, String address, String phoneNumber) {
@@ -14,7 +14,7 @@ public class Member {
 		this.memberID = memberID;
 		this.address = address; 
 		this.phoneNumber = phoneNumber;
-		this.enrollmentDate = new Date(); // initialize date as time of creation
+		this.enrollmentDate = java.time.ZonedDateTime.now(); // initialize date as time of creation
 	}
 
 
@@ -58,12 +58,12 @@ public class Member {
 	}
 
 
-	public Date getEnrollmentDate() {
+	public ZonedDateTime getEnrollmentDate() {
 		return enrollmentDate;
 	}
 
 
-	public void setEnrollmentDate(Date enrollmentDate) {
+	public void setEnrollmentDate(ZonedDateTime enrollmentDate) {
 		this.enrollmentDate = enrollmentDate;
 	}
 	
