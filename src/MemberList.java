@@ -12,6 +12,10 @@ public class MemberList {
 		this.totalMembers = 0;
 	}
 	
+	public int getTotalMembers() {
+		return totalMembers;
+	}
+
 	public ArrayList<Member> getMemberList() {
 		return this.memberList;
 	}
