@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class GroceryStore {
 
@@ -5,6 +6,83 @@ public class GroceryStore {
 	private ProductList products = new ProductList();
 	private TransactionList transactions = new TransactionList();
 	private ShipmentList shipments = new ShipmentList();
+	private static GroceryStore groceryStore;
+	
+	/**
+	 * Private for the singleton pattern Creates the catalog and member collection
+	 * objects
+	 */
+	private GroceryStore() {
+	}
+
+	/**
+	 * Supports the singleton pattern
+	 * 
+	 * @return the singleton object
+	 */
+	public static GroceryStore instance() {
+		if (groceryStore == null) {
+			return groceryStore = new GroceryStore();
+		} else {
+			return groceryStore;
+		}
+	}
+	
+	
+	public boolean addMember(Member member) {
+		
+		boolean success = members.addMember(member);
+		return success;
+	}
+	
+	
+	/**
+	 * Attempts to call the removeMember method in MemberList to remove a specified member with matching memberID.
+	 * @param int memberID to be removed
+	 * @return boolean success indicator
+	 */
+	public boolean removeMember(int memberID) {
+		boolean success = members.removeMember(memberID);
+		return success;
+	}
+	
+	
+	/**
+	 * Attempts to retrieve members from the members MemberList with a matching name.
+	 * @param String name, the name to use as the search parameter
+	 * @return ArrayList of Members with matching names
+	 */
+	public ArrayList<Member> retrieveMembersByName(String name) {
+		ArrayList<Member> memberList = members.getMemberList();
+		ArrayList<Member> matchingMembers = new ArrayList<Member>();
+		
+		for (Member member : memberList) {
+			// comparing by lowercase to get rid of case sensitivityd
+			if ( member.getMemberName().toLowerCase().equals( name.toLowerCase() )) {
+				matchingMembers.add(member);
+			}
+		}
+		return matchingMembers;	
+	}
+	
+	
+	/**
+	 * Prints information of all of the current members in the MemberList
+	 * If there are no members in the system currently, the user is notified.
+	 */
+	public void listAllMembers() {
+		ArrayList<Member> memberList = members.getMemberList();
+		
+		if (memberList.isEmpty()) {
+			System.out.println("There are currently no members in the system.");
+			
+		} else {
+			for (Member member : memberList) {
+				member.print();
+			}
+		}
+	}
+	
 	
 	
 }

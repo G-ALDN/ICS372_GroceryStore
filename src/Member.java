@@ -9,9 +9,9 @@ public class Member {
 	private ZonedDateTime enrollmentDate;
 	
 	
-	public Member(String name, int memberID, String address, String phoneNumber) {
+	public Member(String name, String address, String phoneNumber) {
 		this.memberName = name;
-		this.memberID = memberID;
+		this.memberID = MemberList.getMemberIDCounter(); // set memberID as the next value of the member ID counter
 		this.address = address; 
 		this.phoneNumber = phoneNumber;
 		this.enrollmentDate = java.time.ZonedDateTime.now(); // initialize date as time of creation
@@ -66,6 +66,8 @@ public class Member {
 	public void setEnrollmentDate(ZonedDateTime enrollmentDate) {
 		this.enrollmentDate = enrollmentDate;
 	}
+	
+	
 	
 	// print a string representation of the member's details
 	public void print() {
