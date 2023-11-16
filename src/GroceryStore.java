@@ -133,33 +133,31 @@ public class GroceryStore {
 	}
 
 	public boolean createCart(int memberID) {
-		try {
-			Member m = members.getMember(memberID);
-		} catch (Exception e) {
+
+		Member m = members.getMember(memberID);
+		if (m == null)
 			return false;
-		}
 
 		cart = new Cart(memberID);
 		return true;
 	}
 
 	public boolean addProductToCart(int productID, int quantity) {
-		Product product = null;
-		try {
-			product = products.getProduct(productID);
-		} catch (Exception e) {
+		Product product = products.getProduct(productID);
+		if (product == null)
 			return false;
-		}
-		LineItem item = new LineItem(product, quantity);
 
+		LineItem item = new LineItem(product, quantity);
+		cart.print();
 		return cart.addLineItemToCart(item);
 	}
 
 	public double finalizeCart(double money) {
 		double totalPrice = cart.calculateSales();
-		if (money < cart.calculateSales()) {
+		if (money < totalPrice) {
 			return totalPrice - money;
 		}
+
 		totalPrice -= money;
 		Transaction finalTransaction = cart.createTransaction();
 		transactions.addTransaction(finalTransaction);
