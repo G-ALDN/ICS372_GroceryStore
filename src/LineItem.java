@@ -1,8 +1,8 @@
 
 public class LineItem {
-    Product product;
-    int quantiity;
-    double price;
+    private Product product;
+    private int quantiity;
+    private double price;
 
     public LineItem(Product product, int quantiity) {
         this.product = product;

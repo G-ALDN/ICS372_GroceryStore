@@ -352,7 +352,53 @@ public class GroceryStoreUI {
 		GroceryStore.instance().listAllProducts();
 		
 	}
-	
+
+	public void checkout() {
+		while (true) {
+			int memberID = getIntInput("Enter the member id:");
+			boolean isMember = GroceryStore.instance().createCart(memberID);
+
+			if (!isMember) {
+				System.out.println("The entered MemberID was incorrect. Try again.");
+			} else {
+				break;
+			}
+		}
+
+		while (true) {
+			int productID = getIntInput("Enter the product id (or enter -1 to finalize):");
+			if (productID >= 0) {
+				int quantity = getIntInput("Enter the quantity of item:");
+				boolean success = GroceryStore.instance().addProductToCart(productID, quantity);
+
+				if (success) {
+					continue;
+				} else {
+					System.out.println("The entered ProductID is incorrect. Try again.");
+					continue;
+				}
+
+			} else {
+				break;
+			}
+		}
+		double moneyInputted = 0;
+		while (true) {
+			double money = getDoubleInput("Enter amount of money:");
+			moneyInputted += money;
+			double moneyLeft = GroceryStore.instance().finalizeCart(moneyInputted);
+			if (moneyLeft > 0) {
+				System.out.println("Money Remaining: " + moneyLeft);
+				continue;
+			} else {
+				System.out.println("Change: " + Math.abs(moneyLeft));
+				System.out.println("Please return the change to the customer.");
+				System.out.println("---------------- Transaction Complete ----------------");
+				break;
+			}
+
+		}
+	}
 	
 	
 	/**
@@ -438,6 +484,7 @@ public class GroceryStoreUI {
 			}
 		}
 	}
+
 
 	
 	

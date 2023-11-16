@@ -53,6 +53,7 @@ public class Member {
 	}
 
 
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -66,7 +67,7 @@ public class Member {
 	public void setEnrollmentDate(ZonedDateTime enrollmentDate) {
 		this.enrollmentDate = enrollmentDate;
 	}
-	
+
 	
 	
 	// print a string representation of the member's details
