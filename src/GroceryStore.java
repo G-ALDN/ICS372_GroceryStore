@@ -28,9 +28,12 @@ public class GroceryStore {
 		}
 	}
 	
-	
+	/**
+	 * Attempts to add a new member to the MemberList.
+	 * @param Member to be added
+	 * @return boolean success indicator
+	 */
 	public boolean addMember(Member member) {
-		
 		boolean success = members.addMember(member);
 		return success;
 	}
@@ -72,13 +75,58 @@ public class GroceryStore {
 	 */
 	public void listAllMembers() {
 		ArrayList<Member> memberList = members.getMemberList();
-		
 		if (memberList.isEmpty()) {
 			System.out.println("There are currently no members in the system.");
 			
 		} else {
 			for (Member member : memberList) {
 				member.print();
+			}
+		}
+	}
+	
+	/**
+	 * Attempts to restock a product by adding the product to the ShipmentList.
+	 * Quantity ordered should be 2x minimum restock quantity. 
+	 * @param Product to be ordered
+	 * @return boolean success indicator
+	 */
+	public boolean restockProduct(Product product) {
+		boolean success = shipments.addProductOrder(product);
+		return success;
+	}
+	
+	/**
+	 * Attempts to add a new product to the ProductList catalog.
+	 * @return boolean success indicator
+	 */
+	public boolean addProductToCatalog(Product product) {
+		boolean success = products.addProduct(product);
+		return success;
+	}
+	
+	// get product by int product ID
+	public Product getProduct(int productID) {
+		return products.getProduct(productID);
+	}
+	
+	// get product by String product name
+	public Product getProduct(String productName) {
+		return products.getProduct(productName);
+	}
+	
+	/**
+	 * Prints information of all of the current products in the ProductList
+	 * If there are no products in the system currently, the user is notified.
+	 */
+	public void listAllProducts() {
+		ArrayList<Product> productList = products.getProductList();
+		if (productList.isEmpty()) {
+			System.out.println("There are currently no products in the system.");
+			
+		} else {
+			for (Product product : productList) {
+				product.print();
 			}
 		}
 	}

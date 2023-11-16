@@ -71,13 +71,13 @@ public class Member {
 	
 	// print a string representation of the member's details
 	public void print() {
-		String output = "------------------------------------\n";
+		String output = "---------------- Member Info ---------------\n";
 		output += "Member ID: " + memberID + "\n";
 		output += "Name: " + memberName + "\n";
 		output += "Address: " + address + "\n";
 		output += "Phone Number: " + phoneNumber + "\n";
 		output += "Enrollment Date: " + enrollmentDate.toString() + "\n";
-		output += "------------------------------------\n";
+		output += "---------------------------------------\n";
 		System.out.println(output);
 	}
 	

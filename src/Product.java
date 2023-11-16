@@ -64,6 +64,7 @@ public class Product {
 		System.out.println("Name: " + this.getProductName());
 		System.out.println("ID: " + this.getProductID());
 		System.out.println("Current Stock: " + this.getCurrentStock());
-		System.out.println("Unit Price: " + this.getPrice() + "\n");
+		System.out.println("Unit Price: " + this.getPrice());
+		System.out.println("----------------------------------\n");
 	}
 }

@@ -58,9 +58,8 @@ public class GroceryStoreUI {
 	
 	/**
 	 * Gets a token after prompting
-	 * 
-	 * @param prompt - whatever the user wants as prompt
-	 * @return - the token from the keyboard
+	 * @param prompt - whatever the user enters as prompt
+	 * @return - the token from the user
 	 * 
 	 */
 	public String getToken(String prompt) {
@@ -82,7 +81,6 @@ public class GroceryStoreUI {
 	
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
-	 * 
 	 * @param prompt The string to be prepended to the yes/no prompt
 	 * @return true for yes and false for no
 	 * 
@@ -122,7 +120,6 @@ public class GroceryStoreUI {
 
 	/**
 	 * Prompts for a command from the keyboard
-	 * 
 	 * @return a valid command
 	 * 
 	 */
@@ -168,12 +165,31 @@ public class GroceryStoreUI {
 	 * @return the integer corresponding to the string
 	 * 
 	 */
-	public int getNumberInput(String prompt) {
+	public int getIntInput(String prompt) {
 		do {
 			try {
 				String item = getToken(prompt);
 				Integer number = Integer.valueOf(item);
 				return number.intValue();
+			} catch (NumberFormatException nfe) {
+				System.out.println("Please input a number ");
+			}
+		} while (true);
+	}
+	
+	/**
+	 * Converts the string input to a double
+	 * 
+	 * @param prompt the string for prompting
+	 * @return the double corresponding to the string
+	 * 
+	 */
+	public double getDoubleInput(String prompt) {
+		do {
+			try {
+				String item = getToken(prompt);
+				Double number = Double.valueOf(item);
+				return number.doubleValue();
 			} catch (NumberFormatException nfe) {
 				System.out.println("Please input a number ");
 			}
@@ -200,9 +216,13 @@ public class GroceryStoreUI {
 		}
 	}
 	
-	
+	/**
+	 * Method to be called for removing a member. Prompts the user for the member ID
+	 * of the member to be removed. Confirmation or failure messages are displayed after attempting to remove the member.
+	 * 
+	 */
 	public void removeMember() {
-		int memberID = getNumberInput("Enter the ID of the member you would like to remove.");
+		int memberID = getIntInput("Enter the ID of the member you would like to remove.");
 		boolean success = GroceryStore.instance().removeMember(memberID);
 		
 		if (!success) {
@@ -254,6 +274,88 @@ public class GroceryStoreUI {
 	
 	
 	/**
+	 * Method that adds products to the ProductList catalog.
+	 * Attempts to create a new product using user prompted inputs.
+	 * If product creation is successfull, attempts to place an order 2x the minimum restock quantity.
+	 * User is prompted whether or not they would like to continue adding another product or exit.
+	 */
+	public void addProducts() {
+		
+		while (true) {
+			String productName = getStringInput("Enter the name of the product");
+			int productID = getIntInput("Enter the product ID for the product (must be numbers only)");
+			double price = getDoubleInput("Enter the current price for this product");
+			int restockQty = getIntInput("Enter the minimum restock quantity for this product");
+			int currentStock = 0;
+			Product newProduct = new Product(productName, productID, restockQty, currentStock, price);
+			
+			// adding the new product to the catalog.
+			boolean success = GroceryStore.instance().addProductToCatalog(newProduct);
+			
+			if (success) {
+				System.out.println("This product has been successfully added.");
+				newProduct.print();
+				System.out.println("Ordering product...");
+				
+				// now we attempt to order 2x restock quantity for the new product
+				boolean orderSuccess = GroceryStore.instance().restockProduct(newProduct);
+				if (orderSuccess) {
+					System.out.println(newProduct.getProductName() + " has been ordered, Quantity: " + newProduct.getRestockAmount() * 2);
+				} else {
+					System.out.println("Failure ordering " + newProduct.getProductName() + ". Please try again.");
+					continue;
+				}
+			}
+			// prompt the user if they would like to continue adding another product, or exit
+			boolean addAnother = yesOrNo("Would you like to add another product?");
+			if (addAnother) {
+				continue;
+			} else {
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * Displays information about a Product given a user prompted String product name. 
+	 * User is prompted whether or not they would like to search for another product or exit.
+	 */
+	public void getProductInfo() {
+		
+		while (true) {
+			String productName = getStringInput("Enter the product name");
+			Product productResult = GroceryStore.instance().getProduct(productName);
+			
+			if (productResult != null) {
+				// product was found, so print the details
+				productResult.print();
+			} else {
+				// product was not found.
+				System.out.println("A matching product was not found. Please try again.");
+				continue;
+			}
+			// prompt the user whether or not they would like to search for another product or exit
+			boolean searchAgain = yesOrNo("Would you like to get info about another product?");
+			if (searchAgain) {
+				continue;
+			} else {
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * Lists info for all products in the ProductList catalog
+	 * 
+	 */
+	public void listProducts() {
+		GroceryStore.instance().listAllProducts();
+		
+	}
+	
+	
+	
+	/**
 	 * Displays the help screen
 	 * 
 	 */
@@ -262,7 +364,7 @@ public class GroceryStoreUI {
 		System.out.println(EXIT + ": to Exit\n");
 		System.out.println(ENROLL_MEMBER + ": to enroll a member");
 		System.out.println(REMOVE_MEMBER + ": to remove a member");
-		System.out.println(GET_MEMBER_INFO + ": to get info about a member");
+		System.out.println(GET_MEMBER_INFO + ": to get info about members");
 		System.out.println(ADD_PRODUCTS + ": to add products");
 		System.out.println(CHECK_OUT + ": to check out");
 		System.out.println(GET_PRODUCT_INFO  + ": to get product info");
@@ -299,13 +401,13 @@ public class GroceryStoreUI {
 				getMemberInfo();
 				break;
 			case ADD_PRODUCTS:
-//				addProducts();
+				addProducts();
 				break;
 			case CHECK_OUT:
 //				checkOut();
 				break;
 			case GET_PRODUCT_INFO:
-//				getProductInfo(); 
+				getProductInfo(); 
 				break;
 			case PROCESS_SHIPMENT:
 //				processShipment();
@@ -320,7 +422,7 @@ public class GroceryStoreUI {
 				listMembers();
 				break;
 			case LIST_PRODUCTS:
-//				listProducts();
+				listProducts();
 				break;
 			case LIST_OUTSTANDING_ORDERS:
 //				listOutstandingOrders();

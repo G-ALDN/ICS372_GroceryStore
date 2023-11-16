@@ -14,13 +14,18 @@ public class ProductList {
         return null;
     }
 
+    // case insensitive
     public Product getProduct(String productName){
         for(Product product : productList){
-            if (product.getProductName().equals(productName)) {
+            if (product.getProductName().toLowerCase().equals(productName.toLowerCase())) {
                 return product;
             }
         }
         return null;
+    }
+    
+    public ArrayList<Product> getProductList() {
+    	return this.productList;
     }
 
     public Product get(int index){
