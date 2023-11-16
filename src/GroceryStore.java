@@ -123,7 +123,7 @@ public class GroceryStore {
 	public void listAllProducts() {
 		ArrayList<Product> productList = products.getProductList();
 		if (productList.isEmpty()) {
-			System.out.println("There are currently no products in the system.");
+			System.out.println("There are currently no products in the system.\n");
 			
 		} else {
 			for (Product product : productList) {
@@ -165,6 +165,56 @@ public class GroceryStore {
 		transactions.addTransaction(finalTransaction);
 		return totalPrice;
 
+	}
+	
+	/**
+	 * Processes shipments for products that are currently on order.
+	 * If the product is not on order, the user is notified. 
+	 * @param int productID
+	 * @return boolean success indicator
+	 */
+	public boolean processShipment(int productID) {
+		boolean orderFound = shipments.getOrderStatus(productID);
+		
+		if (orderFound) {
+			Product product = products.getProduct(productID);
+			System.out.println(product.getProductName() + " is on order.");
+			System.out.println("------- Quantity on order: " + product.getRestockAmount()*2 + " -------");
+			// updating stock quantity.
+			product.setCurrentStock( product.getCurrentStock() + (product.getRestockAmount()*2) );
+			System.out.println("------- Stock updated. -------");
+			// this product's shipment is now processed, so we remove the order from shipments.
+			shipments.removeProductOrder(productID);
+			product.print(); // print updated details.
+			return true;
+			
+		} else { // product was not on order
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * Lists info for all products that are currently on order in the shipments ShipmentList
+	 * 
+	 */
+	public void listOutstandingOrders() {
+		ArrayList<Product> productsOnOrder = shipments.getProductsOnOrder();
+		
+		if (productsOnOrder.isEmpty()) {
+			System.out.println("There are currently no products on order.\n");
+		} else {
+			System.out.println("------------ Products on order: ------------\n");
+			for (Product product : productsOnOrder) {
+				System.out.println("----------------------------------");
+				System.out.println("Name: " + product.getProductName());
+				System.out.println("ID: " + product.getProductID());
+				System.out.println("Current Stock: " + product.getCurrentStock());
+				System.out.println("Restock Amount: " + product.getRestockAmount());
+				System.out.println("Quantity on order: " + product.getRestockAmount()*2 );
+				System.out.println("----------------------------------\n");
+			}
+		}
 	}
 	
 	

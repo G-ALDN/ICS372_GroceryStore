@@ -22,6 +22,10 @@ public class ShipmentList {
         }
         return false;
     }
+    
+    public ArrayList<Product> getProductsOnOrder() {
+    	return this.productsOnOrder;
+    }
 
     public Product get(int index){
         try{

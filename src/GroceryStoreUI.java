@@ -402,6 +402,47 @@ public class GroceryStoreUI {
 	
 	
 	/**
+	 * Processes shipments for products that are currently on order.
+	 * If the product is not on order, the user is notified. 
+	 * Process loops until the user does not want to process any more shipments. 
+	 */
+	public void processShipment() {
+		
+		while (true) {
+			int productID = getIntInput("Please enter a product ID");
+			
+			boolean success = GroceryStore.instance().processShipment(productID);
+			if (success) {
+				boolean processAgain = yesOrNo("Would you like to process another shipment?");
+				if (processAgain) {
+					continue;
+				} else {
+					break;
+				}
+			} else {
+				System.out.println("The product ID was not found on any orders. Please try again.");
+			}
+		}
+		
+		
+	}
+	
+	// TODO
+	public void updatePrice() {
+		
+	}
+	
+	
+	/**
+	 * Lists info for all products that are currently on order in the ShipmentList
+	 * 
+	 */
+	public void listOutstandingOrders() {
+		GroceryStore.instance().listOutstandingOrders();
+	}
+	
+	
+	/**
 	 * Displays the help screen
 	 * 
 	 */
@@ -450,13 +491,13 @@ public class GroceryStoreUI {
 				addProducts();
 				break;
 			case CHECK_OUT:
-//				checkOut();
+				checkout();
 				break;
 			case GET_PRODUCT_INFO:
 				getProductInfo(); 
 				break;
 			case PROCESS_SHIPMENT:
-//				processShipment();
+				processShipment();
 				break;
 			case UPDATE_PRICE:
 //				updatePrice();
@@ -471,7 +512,7 @@ public class GroceryStoreUI {
 				listProducts();
 				break;
 			case LIST_OUTSTANDING_ORDERS:
-//				listOutstandingOrders();
+				listOutstandingOrders();
 				break;
 			case SAVE:
 //				save();
