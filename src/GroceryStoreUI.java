@@ -427,8 +427,34 @@ public class GroceryStoreUI {
 		
 	}
 	
-	// TODO
+	/**
+	 * Updates the price of a product in the catalog. Prompts user for the producID and price to update.
+	 * If the product does not exist, user is notified.
+	 * Process loops until the user does not want to update any more products.
+	 */
 	public void updatePrice() {
+		
+		while (true) {
+			int productID = getIntInput("Please enter the ID of the product you would like to update");
+			double newPrice = getDoubleInput("Please enter the new price for this product");
+			boolean success = GroceryStore.instance().updatePrice(productID, newPrice);
+			
+			if (success) {
+				boolean goAgain = yesOrNo("Would you like to update the price of another product?");
+				if (goAgain) {
+					continue;
+				} else {
+					break;
+				}
+			} else { // success false, product was not found
+				System.out.println("This product was not found in the system. Please try again.");
+			}
+		}
+	}
+	
+	
+	// TODO
+	public void printTransactions() {
 		
 	}
 	
@@ -500,7 +526,7 @@ public class GroceryStoreUI {
 				processShipment();
 				break;
 			case UPDATE_PRICE:
-//				updatePrice();
+				updatePrice();
 				break;
 			case PRINT_TRANSACTIONS:
 //				printTransactions();
@@ -536,7 +562,6 @@ public class GroceryStoreUI {
 	 */
 	public static void main(String[] args) {
 		GroceryStoreUI.instance().process();
-		
 	}
 
 }

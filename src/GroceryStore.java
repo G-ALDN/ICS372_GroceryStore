@@ -215,5 +215,25 @@ public class GroceryStore {
 		}
 	}
 	
+	/**
+	 * Attempts to update the price of a product in the catalog, and prints updated information on success.
+	 * If the product does not exist, returns false.
+	 * @param int productID to update
+	 * @param double newPrice price to update
+	 * @return boolean success indicator
+	 */
+	public boolean updatePrice(int productID, double newPrice) {
+		Product product = products.getProduct(productID);
+		
+		if (product == null) {
+			return false;
+		} else {
+			product.setPrice(newPrice);
+			System.out.println("Price has been updated.");
+			product.print();
+			return true;
+		}
+	}
+	
 	
 }
