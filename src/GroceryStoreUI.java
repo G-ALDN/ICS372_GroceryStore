@@ -379,14 +379,19 @@ public class GroceryStoreUI {
 		}
 		double moneyInputted = 0;
 		while (true) {
-			double money = getDoubleInput("Enter amount of money:");
+			if (GroceryStore.instance().getCart().getInCart().isEmpty())
+				break;
+			double money = getDoubleInput("Enter amount of money (or enter -1 to cancel transaction):");
+			if (money < 0) {
+				break;
+			}
 			moneyInputted += money;
 			double moneyLeft = GroceryStore.instance().finalizeCart(moneyInputted);
 			if (moneyLeft > 0) {
-				System.out.println("Money Remaining: " + moneyLeft);
+				System.out.println("Money Remaining: $" + moneyLeft);
 				continue;
 			} else {
-				System.out.println("Change: " + Math.abs(moneyLeft));
+				System.out.println("Change: $" + Math.abs(moneyLeft));
 				System.out.println("Please return the change to the customer.");
 				System.out.println("---------------- Transaction Complete ----------------");
 				break;

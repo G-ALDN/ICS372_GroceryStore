@@ -146,12 +146,17 @@ public class GroceryStore {
 		return true;
 	}
 
+	public Cart getCart() {
+		return cart;
+	}
+
 	public boolean addProductToCart(int productID, int quantity) {
 		Product product = products.getProduct(productID);
 		if (product == null) {
 			System.out.println("Unrecognizable Product ID. Try Again.");
 			return false;
 		}
+
 
 		if (product.getCurrentStock() < quantity) {
 			System.out.println("Product stock is insufficient for this order. Try Again.");
@@ -160,9 +165,21 @@ public class GroceryStore {
 		if (product.getCurrentStock() - quantity >= product.getRestockAmount()) {
 			shipments.addProductOrder(product);
 		}
-		LineItem item = new LineItem(product, quantity);
+		for (LineItem l : cart.getInCart()) {
+			if (l.getProduct().equals(product)) {
+				if (l.getQuantity() + quantity > product.getCurrentStock()) {
+					System.out.println("Product stock is insufficient for this order. Try Again.");
+					return false;
+				}
+				l.setQuantity(l.getQuantity() + quantity);
+				cart.print();
+				return true;
 
+			}
+		}
+		LineItem item = new LineItem(product, quantity);
 		boolean success = cart.addLineItemToCart(item);
+
 		cart.print();
 		return success;
 	}
@@ -172,7 +189,12 @@ public class GroceryStore {
 		if (money < totalPrice) {
 			return totalPrice - money;
 		}
-
+		for (LineItem l : cart.getInCart()) {
+			l.getProduct().setCurrentStock(l.getProduct().getCurrentStock() - l.getQuantity());
+			if (l.getProduct().getCurrentStock() < l.getProduct().getRestockAmount()) {
+				shipments.addProductOrder(l.getProduct());
+			}
+		}
 		totalPrice -= money;
 		Transaction finalTransaction = cart.createTransaction();
 		transactions.addTransaction(finalTransaction);

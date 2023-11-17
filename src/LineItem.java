@@ -27,7 +27,7 @@ public class LineItem {
     }
 
     public void print() {
-        System.out.println(product.getProductName() + " QTY: " + quantiity + " Price: $" + price);
+        System.out.println(product.getProductName() + "       QTY: " + quantiity + "       Price: $" + price);
     }
 
 }

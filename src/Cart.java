@@ -25,6 +25,10 @@ public class Cart {
         return totalProducts;
     }
 
+    public ArrayList<LineItem> getInCart() {
+        return inCart;
+    }
+
     /**
      * Add LineItem to cart during checkout
      * 
@@ -58,20 +62,18 @@ public class Cart {
      * @return new Transaction object
      */
     public Transaction createTransaction() {
-        for (LineItem l : inCart) {
-            l.getProduct().updateStock(l.getProduct().getCurrentStock() - 1);
-        }
+
         return new Transaction(memberID, inCart, totalProducts, this.calculateSales());
     }
     
     
     public void print() {
         System.out.println("Cart                        MemberID: " + memberID);
-        System.out.println(".......................................................");
+        System.out.println("........................................");
         for (LineItem l : inCart) {
             l.print();
         }
-        System.out.println("\nTotal: " + this.calculateSales());
+        System.out.println("\nTotal: $" + this.calculateSales());
     }
 
 }
