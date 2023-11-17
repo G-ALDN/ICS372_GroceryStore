@@ -63,6 +63,16 @@ public class Cart {
         }
         return new Transaction(memberID, inCart, totalProducts, this.calculateSales());
     }
+    
+    
+    public void print() {
+        System.out.println("Cart                        MemberID: " + memberID);
+        System.out.println(".......................................................");
+        for (LineItem l : inCart) {
+            l.print();
+        }
+        System.out.println("\nTotal: " + this.calculateSales());
+    }
 
     public void print() {
         System.out.println("Cart                        MemberID: " + memberID);
