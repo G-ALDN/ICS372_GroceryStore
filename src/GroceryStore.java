@@ -144,12 +144,23 @@ public class GroceryStore {
 
 	public boolean addProductToCart(int productID, int quantity) {
 		Product product = products.getProduct(productID);
-		if (product == null)
+		if (product == null) {
+			System.out.println("Unrecognizable Product ID. Try Again.");
 			return false;
+		}
 
+		if (product.getCurrentStock() < quantity) {
+			System.out.println("Product stock is insufficient for this order. Try Again.");
+			return false;
+		}
+		if (product.getCurrentStock() - quantity >= product.getRestockAmount()) {
+			shipments.addProductOrder(product);
+		}
 		LineItem item = new LineItem(product, quantity);
+
+		boolean success = cart.addLineItemToCart(item);
 		cart.print();
-		return cart.addLineItemToCart(item);
+		return success;
 	}
 
 	public double finalizeCart(double money) {

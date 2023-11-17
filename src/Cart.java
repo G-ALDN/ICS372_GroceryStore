@@ -58,6 +58,9 @@ public class Cart {
      * @return new Transaction object
      */
     public Transaction createTransaction() {
+        for (LineItem l : inCart) {
+            l.getProduct().updateStock(l.getProduct().getCurrentStock() - 1);
+        }
         return new Transaction(memberID, inCart, totalProducts, this.calculateSales());
     }
 

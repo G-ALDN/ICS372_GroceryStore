@@ -369,14 +369,9 @@ public class GroceryStoreUI {
 			int productID = getIntInput("Enter the product id (or enter -1 to finalize):");
 			if (productID >= 0) {
 				int quantity = getIntInput("Enter the quantity of item:");
-				boolean success = GroceryStore.instance().addProductToCart(productID, quantity);
+				GroceryStore.instance().addProductToCart(productID, quantity);
+				continue;
 
-				if (success) {
-					continue;
-				} else {
-					System.out.println("The entered ProductID is incorrect. Try again.");
-					continue;
-				}
 
 			} else {
 				break;
@@ -450,7 +445,7 @@ public class GroceryStoreUI {
 				addProducts();
 				break;
 			case CHECK_OUT:
-//				checkOut();
+				checkout();
 				break;
 			case GET_PRODUCT_INFO:
 				getProductInfo(); 
