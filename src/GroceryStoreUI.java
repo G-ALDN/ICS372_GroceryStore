@@ -356,9 +356,22 @@ public class GroceryStoreUI {
 		
 	}
 
+	/**
+	 * Checkout Method Process:
+	 * 1. Prompt for Member ID and check if valid. User can cancel process if they
+	 * wish.
+	 * 2. Prompt for Product ID to be added to Cart and continue until user
+	 * finalizes transaction.
+	 * 3. Prompt for sufficient amount of money to cover transaction, prompting for
+	 * more if not sufficient. User can cancel here as well.
+	 * 4. Displays amount of change needed to be returned and finishes transaction
+	 * 
+	 */
 	public void checkout() {
 		while (true) {
-			int memberID = getIntInput("Enter the member id:");
+			int memberID = getIntInput("Enter the member id (or enter -1 to cancel):");
+			if (memberID == -1)
+				break;
 			boolean isMember = GroceryStore.instance().createCart(memberID);
 
 			if (!isMember) {
