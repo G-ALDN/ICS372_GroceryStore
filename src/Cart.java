@@ -25,6 +25,11 @@ public class Cart {
         return totalProducts;
     }
 
+    /**
+     * Getter InCart
+     * 
+     * @return LineItems stored in cart
+     */
     public ArrayList<LineItem> getInCart() {
         return inCart;
     }
@@ -66,7 +71,9 @@ public class Cart {
         return new Transaction(memberID, inCart, totalProducts, this.calculateSales());
     }
     
-    
+    /*
+     * Print Current Cart
+     */
     public void print() {
         System.out.println("Cart                        MemberID: " + memberID);
         System.out.println("........................................");
