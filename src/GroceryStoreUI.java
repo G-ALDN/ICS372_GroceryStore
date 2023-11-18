@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -353,9 +356,22 @@ public class GroceryStoreUI {
 		
 	}
 
+	/**
+	 * Checkout Method Process:
+	 * 1. Prompt for Member ID and check if valid. User can cancel process if they
+	 * wish.
+	 * 2. Prompt for Product ID to be added to Cart and continue until user
+	 * finalizes transaction.
+	 * 3. Prompt for sufficient amount of money to cover transaction, prompting for
+	 * more if not sufficient. User can cancel here as well.
+	 * 4. Displays amount of change needed to be returned and finishes transaction
+	 * 
+	 */
 	public void checkout() {
 		while (true) {
-			int memberID = getIntInput("Enter the member id:");
+			int memberID = getIntInput("Enter the member id (or enter -1 to cancel):");
+			if (memberID == -1)
+				break;
 			boolean isMember = GroceryStore.instance().createCart(memberID);
 
 			if (!isMember) {
@@ -453,9 +469,41 @@ public class GroceryStoreUI {
 	}
 	
 	
-	// TODO
+	/**
+	 * Print all Transactions between two specified dates provided by user.
+	 * If Date is invalid, it will prompt for the correct date.
+	 * If no transactions exist within that time frame
+	 */
 	public void printTransactions() {
-		
+		while (true) {
+			ZonedDateTime Date1 = null;
+			try {
+				Date1 = ZonedDateTime.of(
+						LocalDate.of(getIntInput("Date 1\nYear: "), getIntInput("Month: "), getIntInput("Day: ")),
+						LocalTime.MIDNIGHT, ZonedDateTime.now().getZone());
+			} catch (Exception e) {
+				System.out.println("Enter Correct Date Values (Month: 1-12, Day: 1-31 based on month).");
+				continue;
+			}
+			ZonedDateTime Date2 = null;
+			try {
+				Date2 = ZonedDateTime.of(
+						LocalDate.of(getIntInput("Date 2\nYear: "), getIntInput("Month: "), getIntInput("Day: ")),
+						LocalTime.of(23, 59), ZonedDateTime.now().getZone());
+			} catch (Exception e) {
+				System.out.println("Enter Correct Date Values (Month: 1-12, Day: 1-31).");
+				continue;
+			}
+
+			System.out.println("Printing Transactions Between " + Date1.getYear() + "-" + Date1.getMonthValue() + "-"
+					+ Date1.getDayOfMonth() + " and "
+					+ Date2.getYear() + "-" + Date2.getMonthValue() + "-" + Date2.getDayOfMonth() + "... ");
+			boolean success = GroceryStore.instance().printTransactions(Date1, Date2);
+			if (success) {
+				break;
+			}
+
+		}
 	}
 	
 	
@@ -529,7 +577,7 @@ public class GroceryStoreUI {
 				updatePrice();
 				break;
 			case PRINT_TRANSACTIONS:
-//				printTransactions();
+				printTransactions();
 				break;
 			case LIST_MEMBERS:
 				listMembers();

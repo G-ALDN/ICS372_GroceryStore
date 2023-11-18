@@ -1,3 +1,4 @@
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class GroceryStore {
@@ -136,6 +137,12 @@ public class GroceryStore {
 		}
 	}
 
+	/**
+	 * Initiates new Cart
+	 * 
+	 * @param memberID Member ID linked to Cart
+	 * @return boolean valid Member ID checker
+	 */
 	public boolean createCart(int memberID) {
 
 		Member m = members.getMember(memberID);
@@ -146,10 +153,25 @@ public class GroceryStore {
 		return true;
 	}
 
+	/**
+	 * Getter for Cart
+	 * 
+	 * @return Cart object
+	 */
 	public Cart getCart() {
 		return cart;
 	}
 
+	/**
+	 * Add LineItems to Current Cart using Products and Quantities
+	 * Checks Product Stock before adding, if insufficient it fails
+	 * If current Product already exists in Cart, quantity gets updated in cart
+	 * Fails if invalid Product ID
+	 * 
+	 * @param productID product to be added
+	 * @param quantity  quantity of product to be added
+	 * @return boolean success indicator
+	 */
 	public boolean addProductToCart(int productID, int quantity) {
 		Product product = products.getProduct(productID);
 		if (product == null) {
@@ -184,6 +206,15 @@ public class GroceryStore {
 		return success;
 	}
 
+	/**
+	 * Finalize Transaction
+	 * Money is provided until the amount is sufficient to cover transaction
+	 * Items are reordered if their stock falls too low
+	 * Transaction is created and saved
+	 * 
+	 * @param money Money used to cover transaction;
+	 * @return Remaining Balance or Change if amount is negative
+	 */
 	public double finalizeCart(double money) {
 		double totalPrice = cart.calculateSales();
 		if (money < totalPrice) {
@@ -191,7 +222,7 @@ public class GroceryStore {
 		}
 		for (LineItem l : cart.getInCart()) {
 			l.getProduct().setCurrentStock(l.getProduct().getCurrentStock() - l.getQuantity());
-			if (l.getProduct().getCurrentStock() < l.getProduct().getRestockAmount()) {
+			if (l.getProduct().getCurrentStock() <= l.getProduct().getRestockAmount()) {
 				shipments.addProductOrder(l.getProduct());
 			}
 		}
@@ -274,6 +305,29 @@ public class GroceryStore {
 			product.print();
 			return true;
 		}
+	}
+
+	/**
+	 * Prints Transactions in Grocery Store in between two dates
+	 * 
+	 * @param d1 Date 1
+	 * @param d2 Date 2
+	 * @return boolean success indicator
+	 */
+	public boolean printTransactions(ZonedDateTime d1, ZonedDateTime d2) {
+		if (d1.isAfter(d2)) {
+			System.out.println("Date 1 needs to be before Date 2. Try Again.\n");
+			return false;
+		}
+		ArrayList<Transaction> tArr = transactions.getTransactionsByDate(d1, d2);
+		if (tArr.isEmpty()) {
+			System.out.println("No Transactions Found.");
+			return true;
+		}
+		for (Transaction t : tArr) {
+			t.print();
+		}
+		return true;
 	}
 
 }

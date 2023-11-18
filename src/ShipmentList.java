@@ -27,6 +27,10 @@ public class ShipmentList {
     	return this.productsOnOrder;
     }
 
+    public int getTotalOrders() {
+        return totalOrders;
+    }
+
     public Product get(int index){
         try{
             return productsOnOrder.get(index);
@@ -46,7 +50,9 @@ public class ShipmentList {
     }
 
     public void removeProductOrder(int id){
-        productsOnOrder.removeIf(product -> product.getProductID() == id);
+        boolean success = productsOnOrder.removeIf(product -> product.getProductID() == id);
+        if (success)
+            totalOrders--;
     }
 
     public void print(){
