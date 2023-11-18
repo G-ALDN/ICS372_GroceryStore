@@ -27,6 +27,10 @@ public class ShipmentList {
     	return this.productsOnOrder;
     }
 
+    public int getTotalOrders() {
+        return totalOrders;
+    }
+
     public Product get(int index){
         try{
             return productsOnOrder.get(index);
