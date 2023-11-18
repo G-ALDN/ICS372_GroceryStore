@@ -46,7 +46,9 @@ public class ShipmentList {
     }
 
     public void removeProductOrder(int id){
-        productsOnOrder.removeIf(product -> product.getProductID() == id);
+        boolean success = productsOnOrder.removeIf(product -> product.getProductID() == id);
+        if (success)
+            totalOrders--;
     }
 
     public void print(){
