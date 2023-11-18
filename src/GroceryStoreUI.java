@@ -209,6 +209,16 @@ public class GroceryStoreUI {
 		String memberName = getStringInput("Enter the member's name");
 		String address = getStringInput("Enter your address");
 		String phoneNum = getStringInput("Enter your phone number");
+		
+		double moneyInput = getDoubleInput("$30 member fee is required on sign up. Please enter payment amount.");
+		
+		// loops asking for more payment until the $30 fee has been met
+		while (moneyInput < 30) {
+			System.out.println("$" + moneyInput + " entered. Remaining balance required: " + (30 - moneyInput));
+			moneyInput += getDoubleInput("Please enter the remaining amount owed.");
+		}
+		System.out.println("Payment successful. Change to return to customer is: " + (moneyInput - 30));
+		
 		Member newMember = new Member(memberName, address, phoneNum);
 		boolean success = GroceryStore.instance().addMember(newMember);
 		

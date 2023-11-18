@@ -6,6 +6,7 @@ public class Member {
 	private int memberID;
 	private String address;
 	private String phoneNumber;
+	private double feePaid;
 	private ZonedDateTime enrollmentDate;
 	
 	
@@ -14,6 +15,7 @@ public class Member {
 		this.memberID = MemberList.getMemberIDCounter(); // set memberID as the next value of the member ID counter
 		this.address = address; 
 		this.phoneNumber = phoneNumber;
+		this.feePaid = 30.0;
 		this.enrollmentDate = java.time.ZonedDateTime.now(); // initialize date as time of creation
 	}
 
@@ -77,6 +79,7 @@ public class Member {
 		output += "Name: " + memberName + "\n";
 		output += "Address: " + address + "\n";
 		output += "Phone Number: " + phoneNumber + "\n";
+		output += "Fee paid: " + feePaid + "\n";
 		output += "Enrollment Date: " + enrollmentDate.toString() + "\n";
 		output += "---------------------------------------\n";
 		System.out.println(output);
