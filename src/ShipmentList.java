@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+// Collection class for holding Product objects. This class is used
+// To keep track of incoming shipments. Incoming products are kept track of
+// in the productsOnOrder ArrayList. 
+
 public class ShipmentList {
 	
     private ArrayList<Product> productsOnOrder =  new ArrayList<>();

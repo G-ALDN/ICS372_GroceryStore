@@ -7,7 +7,13 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-
+/**
+ * 
+ * GroceryStoreUI class. Used to create a command line interface that the user may interact with to use the GroceryStore.
+ * Command line commands are saved as int variables. Various methods for interacting with the 
+ * GroceryStore system exist.
+ *
+ */
 
 public class GroceryStoreUI {
 	

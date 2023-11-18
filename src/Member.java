@@ -1,5 +1,7 @@
 import java.time.ZonedDateTime;
 
+// Member class
+
 public class Member {
 
 	private String memberName;
@@ -9,7 +11,16 @@ public class Member {
 	private double feePaid;
 	private ZonedDateTime enrollmentDate;
 	
-	
+	/**
+     * Constructor
+     * 
+     * @param String name - name of the member
+     * @param String address - member's address
+     * @param String phoneNumber - member's phone number
+     * 
+     * Members should only be created after paying the $30 fee, so we set the fee paid on construction.
+     * 
+     */
 	public Member(String name, String address, String phoneNumber) {
 		this.memberName = name;
 		this.memberID = MemberList.getMemberIDCounter(); // set memberID as the next value of the member ID counter
@@ -72,7 +83,10 @@ public class Member {
 
 	
 	
-	// print a string representation of the member's details
+	/**
+     * Print method to output Member details to console.
+     * 
+     */
 	public void print() {
 		String output = "---------------- Member Info ---------------\n";
 		output += "Member ID: " + memberID + "\n";
