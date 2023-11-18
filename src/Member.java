@@ -80,7 +80,7 @@ public class Member {
 		output += "Address: " + address + "\n";
 		output += "Phone Number: " + phoneNumber + "\n";
 		output += "Fee paid: " + feePaid + "\n";
-		output += "Enrollment Date: " + enrollmentDate.toString() + "\n";
+		output += "Enrollment Date: " + enrollmentDate.toString().substring(0, 10) + "\n"; // strip the date of just year / month / day
 		output += "---------------------------------------\n";
 		System.out.println(output);
 	}
