@@ -1,11 +1,13 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.Random;
 
 /**
  * 
@@ -37,7 +39,6 @@ public class GroceryStoreUI {
 	private static final int RETRIEVE = 14;
 	private static final int HELP = 15;
 	
-	
 	/**
 	 * Constructor is private to maintain singleton pattern. Conditionally looks for any saved data.
 	 * Otherwise, it gets a singleton Library object.
@@ -46,11 +47,14 @@ public class GroceryStoreUI {
 		if (yesOrNo("Would you like to look for saved data and use it?")) {
 			retrieve();
 		} else {
-			groceryStore = GroceryStore.instance();
+			if(yesOrNo("Would you like to start the TESTING environment?")){
+				createTestEnvironment();
+			} else{
+				groceryStore = GroceryStore.instance();
+			}
 		}
 	}
-	
-	
+
 	/**
 	 * Supports the singleton pattern
 	 * 
@@ -63,8 +67,7 @@ public class GroceryStoreUI {
 			return userInterface;
 		}
 	}
-	
-	
+
 	/**
 	 * Gets a token after prompting
 	 * @param prompt - whatever the user enters as prompt
@@ -85,9 +88,7 @@ public class GroceryStoreUI {
 			}
 		} while (true);
 	}
-	
-	
-	
+
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
 	 * @param prompt The string to be prepended to the yes/no prompt
@@ -101,8 +102,7 @@ public class GroceryStoreUI {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * Method to be called for retrieving saved data. Uses the GroceryStore
 	 * "open" method for retrieval.
@@ -111,21 +111,56 @@ public class GroceryStoreUI {
 	private void retrieve() {
 		try {
 			if (groceryStore == null) {
+				//groceryStore = GroceryStore.instance();
 				// TODO File open statement goes here. must be implemented in GroceryStore first.
-//				groceryStore = GroceryStore.open(File file);
+				String working_dir = System.getProperty("user.dir");
+				Scanner scanner = new Scanner(System.in);
+				String fileName;
+				File loadState;
+				boolean stepSuccess = false;
+
+				while (!stepSuccess) {
+					System.out.print("Load file: ");
+					try {
+						fileName = scanner.nextLine();
+
+						if(fileName.isEmpty()) {
+							System.out.println("Enter a valid file name.");
+						}
+
+						else{
+							loadState = new File(working_dir + File.separator + fileName);
+							boolean exists = loadState.exists();
+
+							if(!loadState.isFile())
+							{
+								System.out.println("File does not exist.");
+							}
+							else {
+								GroceryStore.instance().open(loadState);
+								stepSuccess = true;
+							}
+						}
+
+					} catch (IOError ioe) {
+						System.out.println(ioe.getMessage());
+						ioe.printStackTrace();
+						break;
+					}
+				}
+
+				/*
 				if (groceryStore != null) {
 					System.out.println(" The Grocery Store has been successfully retrieved from the file \n");
 				} else {
 					System.out.println("File doesnt exist; creating new Grocery Store");
 					groceryStore = GroceryStore.instance();
-				}
+				}*/
 			}
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
 	}
-	
-	
 
 	/**
 	 * Prompts for a command from the keyboard
@@ -144,8 +179,7 @@ public class GroceryStoreUI {
 			}
 		} while (true);
 	}
-	
-	
+
 	/**
 	 * Gets a String input after prompting
 	 * 
@@ -165,8 +199,7 @@ public class GroceryStoreUI {
 		} while (true);
 
 	}
-	
-	
+
 	/**
 	 * Converts the string input to a number
 	 * 
@@ -204,8 +237,7 @@ public class GroceryStoreUI {
 			}
 		} while (true);
 	}
-	
-	
+
 	/**
 	 * Method to be called for adding a member. Prompts the user for the appropriate
 	 * values and uses the appropriate GroceryStore method for adding the member.
@@ -250,8 +282,7 @@ public class GroceryStoreUI {
 			System.out.println("Success. Member ID: " + memberID + " was removed.");
 		}
 	}
-	
-	
+
 	/**
 	 * Attempts to find members in the MemberList with the specified name
 	 * 
@@ -281,8 +312,7 @@ public class GroceryStoreUI {
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Calls GroceryStore to prints information of all of the current members in MemberList
 	 * If there are no members in the system currently, the user is notified.
@@ -290,8 +320,7 @@ public class GroceryStoreUI {
 	public void listMembers() {
 		GroceryStore.instance().listAllMembers();
 	}
-	
-	
+
 	/**
 	 * Method that adds products to the ProductList catalog.
 	 * Attempts to create a new product using user prompted inputs.
@@ -305,8 +334,8 @@ public class GroceryStoreUI {
 			int productID = getIntInput("Enter the product ID for the product (must be numbers only)");
 			double price = getDoubleInput("Enter the current price for this product");
 			int restockQty = getIntInput("Enter the minimum restock quantity for this product");
-			int currentStock = 0;
-			Product newProduct = new Product(productName, productID, restockQty, currentStock, price);
+			//int currentStock = 0;
+			Product newProduct = new Product(productName, productID, restockQty, price);
 			
 			// adding the new product to the catalog.
 			boolean success = GroceryStore.instance().addProductToCatalog(newProduct);
@@ -369,7 +398,6 @@ public class GroceryStoreUI {
 	 */
 	public void listProducts() {
 		GroceryStore.instance().listAllProducts();
-		
 	}
 
 	/**
@@ -431,8 +459,7 @@ public class GroceryStoreUI {
 
 		}
 	}
-	
-	
+
 	/**
 	 * Processes shipments for products that are currently on order.
 	 * If the product is not on order, the user is notified. 
@@ -483,8 +510,7 @@ public class GroceryStoreUI {
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Print all Transactions between two specified dates provided by user.
 	 * If Date is invalid, it will prompt for the correct date.
@@ -521,8 +547,7 @@ public class GroceryStoreUI {
 
 		}
 	}
-	
-	
+
 	/**
 	 * Lists info for all products that are currently on order in the ShipmentList
 	 * 
@@ -530,7 +555,15 @@ public class GroceryStoreUI {
 	public void listOutstandingOrders() {
 		GroceryStore.instance().listOutstandingOrders();
 	}
-	
+
+	public void save(){
+		GroceryStore.instance().save();
+	}
+
+	public void createTestEnvironment(){
+		System.out.println("Creating test environment...");
+		GroceryStore.instance().createTestEnvironment();
+	}
 	
 	/**
 	 * Displays the help screen
@@ -553,11 +586,8 @@ public class GroceryStoreUI {
 		System.out.println(LIST_OUTSTANDING_ORDERS + ": to list outstanding orders");
 		System.out.println(SAVE + ": to save data");
 		System.out.println(RETRIEVE + ": to retrieve saved data");
-		System.out.println(HELP + ": to print the help menu");
 	}
-	
-	
-	
+
 	/**
 	 * Method for running the command processes. Calls the appropriate methods for the
 	 * different functionalities based on user input.
@@ -605,10 +635,11 @@ public class GroceryStoreUI {
 				listOutstandingOrders();
 				break;
 			case SAVE:
-//				save();
+				save();
 				break;
 			case RETRIEVE:
-//				retrieve();
+				retrieve(); // retrieve not working from the menu
+				break;
 			case HELP:
 				help();
 				break;
@@ -616,9 +647,6 @@ public class GroceryStoreUI {
 		}
 	}
 
-
-	
-	
 	
 	/**
 	 * The method to start the application. It just calls process().

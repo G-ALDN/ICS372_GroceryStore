@@ -50,7 +50,11 @@ public class TransactionList {
 			return null;
 		}
 	}
-	
+
+	public ArrayList<Transaction> getAllTransactions() {
+		return transactions;
+	}
+
 	public void print() {
 		for (Transaction tx : transactions) {
 			tx.print();
