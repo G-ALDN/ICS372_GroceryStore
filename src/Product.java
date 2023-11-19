@@ -18,13 +18,22 @@ public class Product {
      * @param int stock, the current stock amount.
      * @param double price, the price of the product.
      */
-	public Product(String productName, int productID, int restockAmount, int stock, double price) {
+	public Product(String productName, int productID, int restockAmount, double price, int currentStock) {
 		this.productName = productName;
 		this.productID = productID;
 		this.restockAmount = restockAmount;
 		this.price = price;
-		this.currentStock = stock;
+		this.currentStock = currentStock;
 	}
+
+	public Product(String productName, int productID, int restockAmount, double price) {
+		this.productName = productName;
+		this.productID = productID;
+		this.restockAmount = restockAmount;
+		this.price = price;
+		this.currentStock = restockAmount*2;
+	}
+
 
 	public String getProductName() {
 		return productName;
