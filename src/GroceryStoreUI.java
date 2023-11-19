@@ -273,7 +273,8 @@ public class GroceryStoreUI {
 	 * 
 	 */
 	public void removeMember() {
-		int memberID = getIntInput("Enter the ID of the member you would like to remove.");
+		int memberID = getIntInput("Enter the ID of the member you would like to remove. * (OR -1 to cancel) *");
+		if (memberID == -1) return; // cancel and exit on -1 input
 		boolean success = GroceryStore.instance().removeMember(memberID);
 		
 		if (!success) {
@@ -293,9 +294,9 @@ public class GroceryStoreUI {
 		boolean success = false;
 		
 		while (!success) {
-			String memberName = getStringInput("Enter the name of the member you would like to get info for * (OR 0 to exit member search) *");
+			String memberName = getStringInput("Enter the name of the member you would like to get info for * (OR -1 to cancel member search) *");
 			// if user enters 0, then we exit
-			if (memberName.equals("0")) break;
+			if (memberName.equals("-1")) break;
 			ArrayList<Member> matchingMembers = GroceryStore.instance().retrieveMembersByName(memberName);
 			
 			if (!matchingMembers.isEmpty()) {
@@ -371,7 +372,8 @@ public class GroceryStoreUI {
 	public void getProductInfo() {
 		
 		while (true) {
-			String productName = getStringInput("Enter the product name");
+			String productName = getStringInput("Enter the product name, or -1 to cancel");
+			if (productName.equals("-1")) break; // exit on -1 to cancel
 			Product productResult = GroceryStore.instance().getProduct(productName);
 			
 			if (productResult != null) {
@@ -468,7 +470,8 @@ public class GroceryStoreUI {
 	public void processShipment() {
 		
 		while (true) {
-			int productID = getIntInput("Please enter a product ID");
+			int productID = getIntInput("Please enter a product ID, or -1 to cancel.");
+			if (productID == -1) break; // exit on -1 input
 			
 			boolean success = GroceryStore.instance().processShipment(productID);
 			if (success) {
