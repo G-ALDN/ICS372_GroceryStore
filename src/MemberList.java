@@ -1,13 +1,17 @@
 import java.util.ArrayList;
 
-// collection class to hold Member objects
+// Collection class to hold Member objects
 
 public class MemberList {
 
 	private ArrayList<Member> memberList;
 	private static int totalMembers;
-	private static int memberIDCounter = 100;
+	private static int memberIDCounter = 100; // used to auto generate and increment member ID's. Starts at 100.
 	
+	/**
+     * Constructor
+     * 
+     */
 	public MemberList() {
 		this.memberList = new ArrayList<Member>();
 		totalMembers = 0;
@@ -25,6 +29,11 @@ public class MemberList {
 		return this.memberList;
 	}
 	
+	/**
+     * Used for adding a new Member to the MemberList
+     * @param Member member - the member to be added.
+     * 
+     */
 	public boolean addMember(Member member) {
 		boolean success = this.memberList.add(member);
 		if (success) {
@@ -59,10 +68,12 @@ public class MemberList {
 		return memberList.get(index);
 	}
 	
-	
-//	 method to find and return the member with the matching memberID
-//	 if the member is found in the memberList, the member object is returned.
-//	 if the member is not found, null is returned. 
+	/**
+     * method to find and return the member with the matching memberID
+     * @param memberID - the ID of the member we would like to get. 
+     * @return Member - if the member is found in the memberList, the member object is returned.
+     * @return null - if the member is not found, null is returned.
+     */
 	public Member getMember(int memberID) {
 		for (Member member : memberList) {
 			if (member.getMemberID() == memberID) {
@@ -73,7 +84,9 @@ public class MemberList {
 		return null;
 	}
 	
-	
+	/**
+	 * Print method for printing details about every Member in the MemberList.
+	 */
 	public void print() {
 		for (Member member : memberList) {
 			member.print();

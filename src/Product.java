@@ -1,4 +1,6 @@
 
+// Product class
+
 public class Product {
 
 	private String productName;
@@ -7,6 +9,15 @@ public class Product {
 	private int restockAmount;
 	private double price;
 
+	/**
+     * Constructor
+     * 
+     * @param String productName - the name of the product.
+     * @param int productID - the ID to be used for the product.
+     * @param int restockAmount - the minimum restock amount for this product.
+     * @param int stock, the current stock amount.
+     * @param double price, the price of the product.
+     */
 	public Product(String productName, int productID, int restockAmount, int stock, double price) {
 		this.productName = productName;
 		this.productID = productID;
@@ -59,6 +70,10 @@ public class Product {
 		this.currentStock += quantity;
 	}
 
+	/**
+     * Print method to print product details to console.
+     * 
+     */
 	public void print() {
 		System.out.println("---------- Product Info ----------");
 		System.out.println("Name: " + this.getProductName());

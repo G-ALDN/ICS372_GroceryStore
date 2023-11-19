@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+// Cart class
+
 public class Cart {
     private int memberID;
     private ArrayList<LineItem> inCart;

@@ -1,6 +1,12 @@
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
+/**
+ * GroceryStore is a facade class that handles operations that
+ * are called from the GroceryStoreUI user interface.
+ */
+
+
 public class GroceryStore {
 
 	private MemberList members = new MemberList();
