@@ -64,12 +64,12 @@ public class Transaction {
      * Print Transaction
      */
     public void print() {
-        System.out.println("Transaction                        MemberID: " + memberID);
-        System.out.println(".......................................................");
+        System.out.println("Transaction                                        MemberID: " + memberID);
+        System.out.println("................................................................");
         for (LineItem l : lineItemList) {
             l.print();
         }
-        System.out.println("\nTotal: " + total);
+        System.out.println("\nTotal: $" + total);
         System.out.println(
                 "Date: " + dateOfSale.getYear() + "-" + dateOfSale.getMonthValue() + "-" + dateOfSale.getDayOfMonth());
 

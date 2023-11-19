@@ -453,7 +453,7 @@ public class GroceryStoreUI {
 			} else {
 				System.out.println("Change: $" + Math.abs(moneyLeft));
 				System.out.println("Please return the change to the customer.");
-				System.out.println("---------------- Transaction Complete ----------------");
+				System.out.println("----------------------- Transaction  Complete -----------------------");
 				break;
 			}
 
@@ -514,26 +514,32 @@ public class GroceryStoreUI {
 	/**
 	 * Print all Transactions between two specified dates provided by user.
 	 * If Date is invalid, it will prompt for the correct date.
-	 * If no transactions exist within that time frame
+	 * If no transactions exist within that time frame, it will notify user.
 	 */
 	public void printTransactions() {
 		while (true) {
+			String d1String = getStringInput("Enter First Date (yyyy-mm-dd) :");
 			ZonedDateTime Date1 = null;
 			try {
+				String[] strings = d1String.split("-", -1);
 				Date1 = ZonedDateTime.of(
-						LocalDate.of(getIntInput("Date 1\nYear: "), getIntInput("Month: "), getIntInput("Day: ")),
+						LocalDate.of(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]),
+								Integer.parseInt(strings[2])),
 						LocalTime.MIDNIGHT, ZonedDateTime.now().getZone());
 			} catch (Exception e) {
-				System.out.println("Enter Correct Date Values (Month: 1-12, Day: 1-31 based on month).");
+				System.out.println("Incorrect Date Values. Try Again.");
 				continue;
 			}
+			String d2String = getStringInput("Enter Second Date (yyyy-mm-dd) :");
 			ZonedDateTime Date2 = null;
 			try {
+				String[] strings = d2String.split("-", -1);
 				Date2 = ZonedDateTime.of(
-						LocalDate.of(getIntInput("Date 2\nYear: "), getIntInput("Month: "), getIntInput("Day: ")),
+						LocalDate.of(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]),
+								Integer.parseInt(strings[2])),
 						LocalTime.of(23, 59), ZonedDateTime.now().getZone());
 			} catch (Exception e) {
-				System.out.println("Enter Correct Date Values (Month: 1-12, Day: 1-31).");
+				System.out.println("Incorrect Date Values. Try Again.");
 				continue;
 			}
 

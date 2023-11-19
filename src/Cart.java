@@ -77,8 +77,8 @@ public class Cart {
      * Print Current Cart
      */
     public void print() {
-        System.out.println("Cart                        MemberID: " + memberID);
-        System.out.println("........................................");
+        System.out.println("Cart                                        MemberID: " + memberID);
+        System.out.println(".........................................................");
         for (LineItem l : inCart) {
             l.print();
         }

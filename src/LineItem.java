@@ -57,7 +57,9 @@ public class LineItem {
      * Print LineItem
      */
     public void print() {
-        System.out.println(product.getProductName() + "       QTY: " + quantiity + "       Price: $" + price);
+        String qtyString = "qty: " + quantiity;
+        String pString = "Price: " + String.format("%.2f", price);
+        System.out.printf("%-40s %-10s %s %n", product.getProductName(), qtyString, pString);
     }
 
 }
