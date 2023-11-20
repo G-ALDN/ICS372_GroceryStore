@@ -46,24 +46,22 @@ public class CheckoutTests {
     }
 
     @Test
-    public void testCreateTransaction() {
+    public void testCheckoutSuccess() {
         groceryStore.createCart(adan.getMemberID());
         Product product2 = new Product("Pizza", 98723, 5, 12.0, 2);
         groceryStore.addProductToCatalog(product2);
         groceryStore.addProductToCart(product2.getProductID(), 2);
         double change = groceryStore.finalizeCart(30.0);
-        System.out.println(change);
-        assertEquals("Customer should receive change for pruchase.", -6.0, change);
+        assertEquals("Customer should receive change for pruchase.", -6.0, change, 0.01);
     }
 
     @Test
-    public void testFinalizeCartInsufficientFunds() {
+    public void testCheckoutInsufficientFunds() {
         groceryStore.createCart(jackson.getMemberID());
-        Product product3 = new Product("Pizza", 98765, 5, 12.0, 2);
+        Product product3 = new Product("Pizza", 98765, 5, 12.0, 5);
         groceryStore.addProductToCatalog(product3);
         groceryStore.addProductToCart(product3.getProductID(), 2);
         double change = groceryStore.finalizeCart(10.0);
-        System.out.println(change);
-        assertEquals("Insuffcient payment is received.", 14.0, change);
+        assertEquals("Insuffcient payment is received.", 14.0, change, 0.01);
     }
 }

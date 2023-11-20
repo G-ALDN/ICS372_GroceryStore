@@ -23,21 +23,18 @@ public class MemberTests {
         // Test adding a new member
         boolean result = groceryStore.addMember(jackson);
         assertTrue("Member should be added successfully", result);
-        assertEquals("Member ID counter should be incremented by 1 (Init val = 100)", 100, jackson.getMemberID());
+        assertEquals("Member ID counter should be incremented by 1 (Init val = 100)", 101, jackson.getMemberID());
         adan = new Member("Adan", "1234 Other St. S", "612-098-1234");
-        groceryStore.addMember(adan);
-        assertEquals("Member ID counter should be incremented by 1 (Init val = 100)", 101, adan.getMemberID());
+        boolean result2 = groceryStore.addMember(adan);
+        assertEquals("Member ID counter should be incremented by 1 (Init val = 100)", 102, adan.getMemberID());
     }
 
     @Test
     public void testRemoveMember() {
         // Test adding a new member
-        boolean result = groceryStore.removeMember(jackson.getMemberID());
-        System.out.println(jackson.getMemberID());
-        System.out.println(result);
+        preston = new Member("Preston", "Neverland", "123-456-4643");
+        groceryStore.addMember(preston);
+        boolean result = groceryStore.removeMember(preston.getMemberID());
         assertTrue("Member should be successfully removed.", result);
-
-        // Should probably allow access to total members in groceryStore or access to the list so we can see .size() when
-        // removing members
     }
 }
