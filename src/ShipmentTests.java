@@ -15,8 +15,8 @@ public class ShipmentTests {
         product1 = new Product("Coke", 12345, 10, 1.99);
         product2 = new Product("Pepsi", 12346, 4, 1.99, 1);
         product3 = new Product("Monster", 12333, 6, 1.99, 0);
-        //groceryStore.addProductToCatalog(product3);
-        //groceryStore.restockProduct(product3);
+        groceryStore.addProductToCatalog(product3);
+        groceryStore.restockProduct(product3);
     }
 
     @Test
@@ -27,7 +27,6 @@ public class ShipmentTests {
 
     @Test
     public void testShipmentProcessing(){
-        groceryStore.addProductToCatalog(product3);
         groceryStore.restockProduct(product3);
         boolean result = groceryStore.processShipment(product3.getProductID());
         assertTrue("Shipment should be processed back to store successfully.", result);
