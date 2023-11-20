@@ -82,7 +82,7 @@ public class Cart {
         for (LineItem l : inCart) {
             l.print();
         }
-        System.out.println("\nTotal: $" + this.calculateSales());
+        System.out.println("\nTotal: $" + String.format("%.2f", this.calculateSales()));
     }
 
 }

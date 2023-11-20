@@ -181,7 +181,10 @@ public class GroceryStore {
 			System.out.println("Unrecognizable Product ID. Try Again.");
 			return false;
 		}
-
+		if (quantity <= 0) {
+			System.out.println("Enter Valid Quantity.");
+			return false;
+		}
 		if (product.getCurrentStock() < quantity) {
 			System.out.println("Product stock is insufficient for this order. Try Again.");
 			return false;
