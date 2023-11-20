@@ -22,8 +22,7 @@ public class ProductTests {
 
     @Test
     public void testAddProductEmpty() {
-        boolean results = productList.getProductList().isEmpty();
-        assertTrue("No products should be in list.", results);
+        assertTrue("No products should be in list.", productList.getProductList().isEmpty());
     }
 
     @Test
@@ -31,6 +30,7 @@ public class ProductTests {
         boolean result = groceryStore.addProductToCatalog(product1);
         assertTrue("Coke should be added to product list.", result);
     }
+
 
     @Test
     public void testAddProductDuplicate(){
@@ -54,8 +54,23 @@ public class ProductTests {
     }
 
     @Test
+    public void testNoMatchingProductInCatalogByID(){
+        Product p1 = groceryStore.getProduct(product3.getProductID());
+        //System.out.println(p1.getProductID());
+        assertNull("No product of that ID should exist in calendar.", p1);
+    }
+
+    @Test
     public void testNoMatchingProductInCatalogByName(){
         Product p2 = groceryStore.getProduct(product3.getProductName());
         assertNull("No product of that name should exist in calendar.", p2);
     }
+
+    @Test
+    public void testAddNullProduct(){
+        boolean result = groceryStore.addProductToCatalog(null);
+        assertTrue("Null products are ignored.", result);
+    }
+
+
 }

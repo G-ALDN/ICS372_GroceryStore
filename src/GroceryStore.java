@@ -1,7 +1,3 @@
-import org.junit.internal.TextListener;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-
 import java.time.ZonedDateTime;
 import java.io.*;
 import java.util.*;
@@ -534,12 +530,8 @@ public class GroceryStore {
 		// trans.MemberID, line.productName, line.ID, line.restockAmount, line.price, line.currentStock, line.quantity,
 		// line.total price
 
-		ArrayList<LineItem> lineItems = new ArrayList<>();
-		int memberID = -1;
-		int totalProducts = -1;
-		double totalPrice = -1;
-
 		while (tokens.hasMoreTokens()) {
+			int memberID = -1;
 			String productName = null;
 			int productID = -1;
 			int restock = -1;
@@ -547,8 +539,11 @@ public class GroceryStore {
 			int currentStock = -1;
 			int quantity = -1;
 			double linePrice = -1;
+			double totalPrice = -1;
+			int totalProducts = -1;
 			int argCounter = 1;
 			LineItem line;
+			ArrayList<LineItem> lineItems = new ArrayList<>();
 			boolean readFlag = true;
 
 			while (readFlag && tokens.hasMoreTokens()) {
@@ -613,10 +608,10 @@ public class GroceryStore {
 				line = new LineItem(product, quantity);
 				lineItems.add(line);
 			}
-		}
 
-		Transaction transaction = new Transaction(memberID, lineItems, totalProducts, totalPrice);
-		GroceryStore.instance().transactions.addTransaction(transaction);
+			Transaction transaction = new Transaction(memberID, lineItems, totalProducts, totalPrice);
+			GroceryStore.instance().transactions.addTransaction(transaction);
+		}
 
 	}
 
@@ -725,19 +720,6 @@ public class GroceryStore {
 	}
 
 	public void createTestEnvironment () {
-		System.out.println("================ STARTING UNIT TESTS ================");
-		JUnitCore junit = new JUnitCore();
-		junit.addListener(new TextListener(System.out));
-		Result results = junit.run(
-				MemberTests.class,
-				ProductTests.class,
-				ShipmentTests.class,
-				CheckoutTests.class,
-				PriceTests.class
-		);
-		groceryStore = null;
-		System.out.println("================ UNIT TESTS COMPLETE ================\n\n\n");
-
 		ArrayList<String> firstName = new ArrayList<>(Arrays.asList("Liam", "Olivia", "Noah", "Ava", "Sophia", "Mia", "Jackson", "Aiden", "Lucas", "Sophia"));
 		ArrayList<String> lastName = new ArrayList<>(Arrays.asList("Smith", "Johnson", "Brown", "Davis", "Jones", "Miller", "Wilson", "Moore", "Taylor", "Anderson"));
 		ArrayList<String> productName = new ArrayList<>(Arrays.asList("Zesty Zucchini Chips", "Mango Tango Smoothie",
@@ -769,7 +751,6 @@ public class GroceryStore {
 			GroceryStore.instance().addMember(member);
 		}
 
-
 		// Create Random Products
 		for (int i = 0; i < productName.size(); i++) {
 			// Member: Name (as first + last), Address, PhoneNumber, EnrollmentDate
@@ -786,11 +767,10 @@ public class GroceryStore {
 			int totalProducts = 0;
 			double totalPrice = 0;
 
-			int randomItemsNum = random.nextInt(5) + 1;
-			for(int j = 0; j < randomItemsNum; j++)
+			for(int j = 0; j < 3; j++)
 			{
 				int productIndex = random.nextInt(products.getProductList().size());
-				int randomQuantity = random.nextInt(10) + 1;
+				int randomQuantity = random.nextInt(10);
 				Product product = products.get(productIndex);
 				LineItem line = new LineItem(product, randomQuantity);
 				lineItems.add(line);
