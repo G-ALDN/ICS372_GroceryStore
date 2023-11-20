@@ -15,7 +15,6 @@ public class LineItem {
         this.quantiity = quantiity;
         price = product.getPrice() * quantiity;
     }
-
     /**
      * Getter Product
      * 

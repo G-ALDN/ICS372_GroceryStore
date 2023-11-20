@@ -64,6 +64,12 @@ public class ProductList {
      * 
      */
     public boolean addProduct(Product product){
+        if(productList.contains(product))
+        {
+            System.out.println("Product already in catalog.");
+            return false;
+        }
+
         boolean success = productList.add(product);
         if (success) {
             totalProducts++;
